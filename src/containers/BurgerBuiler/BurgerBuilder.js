@@ -26,8 +26,8 @@ class BurgerBuilder extends React.Component {
 
     addIngredientHandler = (ingredient) => {
         this.setState(prevState => {
-            const {name, value} = ingredient
-            if(this.state.ingredients[name] + value < 0)
+            const { name, value } = ingredient
+            if (this.state.ingredients[name] + value < 0)
                 return
 
             return {
@@ -35,16 +35,16 @@ class BurgerBuilder extends React.Component {
                     ...prevState.ingredients,
                     [name]: prevState.ingredients[name] + value
                 }
-            }    
+            }
         })
     }
 
     orderHandler = () => {
-        this.setState({purchasing: true})
+        this.setState({ purchasing: true })
     }
 
     purchaseCancelHandler = () => {
-        this.setState({purchasing: false})
+        this.setState({ purchasing: false })
     }
 
     purchaseContinueHandler = () => {
@@ -57,29 +57,29 @@ class BurgerBuilder extends React.Component {
     }
 
     render() {
-        const {disabledInfo, price} = Object.entries(this.state.ingredients).reduce((acc, pair) => {
+        const { disabledInfo, price } = Object.entries(this.state.ingredients).reduce((acc, pair) => {
             const [key, value] = pair
             acc.disabledInfo[key] = value <= 0//determian si debe estar deshabilitado
             acc.price += INGREDIENTS_PRICES[key] * value//calcula el precio
             return acc
-        }, {disabledInfo: {}, price: 0})
+        }, { disabledInfo: {}, price: 0 })
 
-        
+
 
         return (
             <Aux>
-                <Modal 
+                <Modal
                     show={this.state.purchasing}
                     modalClosed={this.purchaseCancelHandler}>
-                    <OrderSummary 
+                    <OrderSummary
                         ingredients={this.state.ingredients}
                         purchaseCanceled={this.purchaseCancelHandler}
                         purchaseContinued={this.purchaseContinueHandler}
                     />
                 </Modal>
-                <Burger ingredients={this.state.ingredients}/>
+                <Burger ingredients={this.state.ingredients} />
                 <BuildControls
-                    price={price} 
+                    price={price}
                     handleAddIngredient={this.addIngredientHandler}
                     disabled={disabledInfo}
                     order={this.orderHandler}
