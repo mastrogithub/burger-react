@@ -1,6 +1,6 @@
 import React from "react";
 
-import Aux from "../../hoc/Auxiliary/Auxiliary";
+import Auxiliary from "../../hoc/Auxiliary/Auxiliary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "./../../components/UI/Modal/Modal";
@@ -100,7 +100,7 @@ class BurgerBuilder extends React.Component {
             orderSummary = <Spinner />
         }
             return (
-                <Aux>
+                <Auxiliary>
                     <Modal
                         show={this.state.purchasing}
                         modalClosed={this.purchaseCancelHandler}
@@ -114,7 +114,7 @@ class BurgerBuilder extends React.Component {
                         disabled={disabledInfo}
                         order={this.orderHandler}
                     />
-                </Aux>
+                </Auxiliary>
             );
     }
 }
