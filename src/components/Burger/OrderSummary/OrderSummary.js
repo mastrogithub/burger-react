@@ -13,7 +13,7 @@ const orderSummary = (props) => {
             </li>
         )
     })
-
+    
     return (
         <Auxiliary>
             <h3>Your Order</h3>
