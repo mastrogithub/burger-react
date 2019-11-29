@@ -9,7 +9,7 @@ class Orders extends React.Component {
         orders: [],
         loading: true
     }
-
+  
     componentDidMount() {
         axios.get('/orders.json')
             .then(res => {
@@ -23,7 +23,7 @@ class Orders extends React.Component {
     }
 
     render() {
-        let orders = this.state.orders.map( order => <Order key={order.key} ingredients={order.ingrdients}/>)
+        let orders = this.state.orders.map( order => <Order key={order.key} ingredients={order.ingredients}/>)
         if(this.state.loading) {
             orders = <Spinner />
         }

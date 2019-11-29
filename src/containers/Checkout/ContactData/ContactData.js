@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
 import Button from '../../../components/UI/Button/Button'
 import classes from './ContactData.module.css'
@@ -21,8 +22,8 @@ class ContactData extends React.Component {
         this.setState({ loading: true });
 
         const order = {
-            ingrdients: this.props.ingredients,
-            price: Math.floor(Math.random() * 50),
+            ingredients: this.props.ingredients,
+            price: this.props.price,
             customer: {
                 name: "Seba",
                 street: "Los Pinos 2555"
@@ -69,4 +70,9 @@ class ContactData extends React.Component {
     }
 }
 
-export default ContactData
+const mapStateToProps = state => ({
+    ingredients: state.ingredients,
+    price: state.price
+})
+
+export default connect(mapStateToProps)(ContactData)
