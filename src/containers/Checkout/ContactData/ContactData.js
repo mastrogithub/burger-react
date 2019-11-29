@@ -1,10 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import Button from '../../../components/UI/Button/Button'
 import classes from './ContactData.module.css'
 import axios from '../../../axios-orders'
 import Spinner from '../../../components/UI/Spinner/Spinner'
+import withErrorHandler from '../../../components/UI/withErrorHandler/withErrorHandler'
+import * as actions from '../../../store/actions/index'
 
 class ContactData extends React.Component {
     state = {
@@ -19,7 +21,6 @@ class ContactData extends React.Component {
 
     orderHandler = (event) => {
         event.preventDefault()
-        this.setState({ loading: true });
 
         const order = {
             ingredients: this.props.ingredients,
@@ -30,21 +31,7 @@ class ContactData extends React.Component {
             },
             email: "test@test.com"
         };
-        setTimeout(
-            () =>
-                axios
-                    .post("/orders.json", order)
-                    .then(res => {
-                        this.setState({ loading: false })
-                        this.props.history.push('/')
-                    }
-
-                    )
-                    .catch(err =>
-                        this.setState({ loading: false })
-                    ),
-            3000
-        );
+        this.props.orderBurger(order)
     }
 
     render() {
@@ -75,4 +62,8 @@ const mapStateToProps = state => ({
     price: state.price
 })
 
-export default connect(mapStateToProps)(ContactData)
+const mapDispatchToProps = dispatch => ({
+    orderBurger: (orderData) => dispatch(actions.purchaseBurgerStart(orderData))
+})
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios))

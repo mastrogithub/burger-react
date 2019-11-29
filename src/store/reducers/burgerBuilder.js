@@ -1,13 +1,9 @@
-import * as actionsTypes from './actions'
+import * as actionsTypes from '../actions/actionTypes'
 
 const initialState = {
-    ingredients: {
-        salad: 0,
-        bacon: 0,
-        cheese: 0,
-        meat: 0
-    },
-    price: 0
+    ingredients: null,
+    price: 0,
+    error: false
 }
 
 const INGREDIENTS_PRICES = {
@@ -25,11 +21,22 @@ export default (state = initialState, action) => {
                 ...state.ingredients,
                 [name]: state.ingredients[name] + value
             }
-            const price = state.price + INGREDIENTS_PRICES[name]*value
+            const price = state.price + INGREDIENTS_PRICES[name] * value
             return {
                 ...state,
                 ingredients,
                 price
+            }
+        case actionsTypes.SET_INGREDIENTS:
+            return {
+                ...state,
+                ingredients: action.payload,
+                error: false
+            }
+        case actionsTypes.FETCH_INGREDIENTS_FAILD:
+            return {
+                ...state,
+                error: true
             }
         default:
             return state
