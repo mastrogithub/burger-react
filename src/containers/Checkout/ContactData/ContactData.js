@@ -15,8 +15,7 @@ class ContactData extends React.Component {
         address: {
             street: '',
             postalCode: ''
-        },
-        loading: false
+        }
     }
 
     orderHandler = (event) => {
@@ -44,7 +43,7 @@ class ContactData extends React.Component {
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         )
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner />
         }
 
@@ -58,12 +57,13 @@ class ContactData extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    ingredients: state.ingredients,
-    price: state.price
+    ingredients: state.burguerBuilderReducer.ingredients,
+    price: state.burguerBuilderReducer.price,
+    loading: state.orderReducer.loading
 })
 
 const mapDispatchToProps = dispatch => ({
-    orderBurger: (orderData) => dispatch(actions.purchaseBurgerStart(orderData))
+    orderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
 })
 
-export default connect(mapStateToProps)(withErrorHandler(ContactData, axios))
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios))

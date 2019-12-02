@@ -8,7 +8,7 @@ import Modal from "./../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../components/UI/withErrorHandler/withErrorHandler";
-import * as burgerBuilderActions from '../../store/actions/index'
+import * as actions from '../../store/actions/index'
 
 class BurgerBuilder extends React.Component {
     state = {
@@ -35,6 +35,7 @@ class BurgerBuilder extends React.Component {
         // for (let i in this.props.ingredients) {
         //     queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ingredients[i]))
         // }
+        this.props.initPurchase()
         this.props.history.push('/checkout')
     };
 
@@ -87,16 +88,17 @@ class BurgerBuilder extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.price,
-        error: state.error
+        ingredients: state.burguerBuilderReducer.ingredients,
+        price: state.burguerBuilderReducer.price,
+        error: state.burguerBuilderReducer.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        addIngredientHandler: ingredient => dispatch(burgerBuilderActions.addIngredient(ingredient)),
-        initIngredients: () => dispatch(burgerBuilderActions.initIngredients())
+        addIngredientHandler: ingredient => dispatch(actions.addIngredient(ingredient)),
+        initIngredients: () => dispatch(actions.initIngredients()),
+        initPurchase: () => dispatch(actions.purchaseInit())
     }
 }
 

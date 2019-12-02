@@ -3,8 +3,7 @@ import axios from '../../axios-orders'
 
 export const purchaseBurgerSuccess = (id, orderData) => ({
     type: actionTypes.PURCHASE_BURGER_SUCCESS,
-    id,
-    orderData
+    payload: { id, orderData }
 })
 
 export const purchaseBurgerFail = (error) => ({
@@ -12,13 +11,59 @@ export const purchaseBurgerFail = (error) => ({
     error
 })
 
-export const purchaseBurgerStart = orderData => dispatch => {
+export const purchaseBurgerStart = () => {
+    return {
+        type: actionTypes.PURCHASE_BURGER_START
+    }
+}
+
+export const purchaseBurger = orderData => dispatch => {
+    dispatch(purchaseBurgerStart())
     axios
         .post("/orders.json", orderData)
         .then(res => {
-            dispatch(purchaseBurgerStart(res.data, orderData))
+            dispatch(purchaseBurgerSuccess(res.data.name, orderData))
         })
         .catch(error =>
             dispatch(purchaseBurgerFail(error))
         )
+}
+
+export const purchaseInit = () => {
+    return {
+        type: actionTypes.PURCHASE_INIT
+    }
+}
+
+export const fetchOrdersSuccess = (orders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_SUCCESS,
+        payload: orders
+    }
+}
+
+export const fetchOrdersFail = (error) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_FAIL,
+        error
+    }
+}
+
+export const fetchOrdersStart = () => {
+    return {
+        type: actionTypes.FETCH_ORDERS_START
+    }
+}
+
+export const fetchOrders = () => dispatch => {
+    dispatch(fetchOrdersStart())
+    axios
+        .get('/orders.json')
+        .then(res => {
+            const orders = Object.entries(res.data).map(([key, value]) => {
+                return { key, ...value }
+            })
+            dispatch(fetchOrdersSuccess(orders))
+        })
+        .catch(err => dispatch(fetchOrdersFail(err)))
 }

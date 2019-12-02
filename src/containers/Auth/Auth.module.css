@@ -1,0 +1,33 @@
+.Contenedor {
+    display: flex;
+    padding: 20px;
+    width: 60%;
+    margin:  auto;
+    border: 1px solid grey;
+    box-shadow: 10px 5px 5px grey;
+}
+
+form {
+    width: 50%;
+    margin: auto;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+    margin: 10px;
+    border: none;
+    border-bottom: 1px solid blue;
+    background-color: transparent;
+    font-size: medium;
+}
+
+input:focus {
+    background-color: transparent;
+    outline: none;
+}
+
+button {
+    display: flex;
+    margin: auto;
+}

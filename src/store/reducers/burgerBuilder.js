@@ -31,6 +31,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: action.payload,
+                price: 0,
                 error: false
             }
         case actionsTypes.FETCH_INGREDIENTS_FAILD:
