@@ -6,8 +6,14 @@ import NavigationItem from './NavigationItem/NavigationItem'
 const navigationItems = props => (
     <ul className={styles.NavigationItems}>
         <NavigationItem link="/">Burger Builder</NavigationItem>
-        <NavigationItem link="/orders">Orders</NavigationItem>
-        <NavigationItem link="/auth">Authenticate</NavigationItem>
+        {props.isAuth
+            ? (
+                <React.Fragment>
+                    <NavigationItem link="/orders">Orders</NavigationItem>
+                    <NavigationItem link="/logout">Logout</NavigationItem>
+                </React.Fragment>
+            )
+            : <NavigationItem link="/auth">Authenticate</NavigationItem>}
     </ul>
 )
 

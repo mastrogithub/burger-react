@@ -30,7 +30,7 @@ class ContactData extends React.Component {
             },
             email: "test@test.com"
         };
-        this.props.orderBurger(order)
+        this.props.orderBurger(order, this.props.token)
     }
 
     render() {
@@ -59,7 +59,8 @@ class ContactData extends React.Component {
 const mapStateToProps = state => ({
     ingredients: state.burguerBuilderReducer.ingredients,
     price: state.burguerBuilderReducer.price,
-    loading: state.orderReducer.loading
+    loading: state.orderReducer.loading,
+    token: state.authReducer.token
 })
 
 const mapDispatchToProps = dispatch => ({

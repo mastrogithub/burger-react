@@ -5,11 +5,13 @@ import Order from '../../components/Order/Order'
 //import axios from '../../axios-orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import * as actions from '../../store/actions/index'
+import withErrorHandler from '../../components/UI/withErrorHandler/withErrorHandler'
+import axios from '../../axios-orders'
 
 class Orders extends React.Component {
     
     componentDidMount() {
-        this.props.fetchOrders()
+        this.props.fetchOrders(this.props.token)
     }
 
     render() {
@@ -27,14 +29,15 @@ class Orders extends React.Component {
 
 const maptStateToProps = state => ({
     orders: state.orderReducer.orders,
-    loading: state.orderReducer.loading
+    loading: state.orderReducer.loading,
+    token: state.authReducer.token
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchOrders: () => dispatch(actions.fetchOrders())
+    fetchOrders: (token) => dispatch(actions.fetchOrders(token))
 })
 
 export default connect(
     maptStateToProps,
     mapDispatchToProps
-)(Orders)
+)(withErrorHandler(Orders, axios))
